@@ -1,15 +1,16 @@
-require 'rubygems'
-require 'csv'
-require 'lyricfy'
-fetcher = Lyricfy::Fetcher.new
-data = CSV.read('data/adddata/testdata.csv')
-data.each do |songdata|
-  begin
-    song = fetcher.search songdata[1], songdata[2]
-    File.open('data/2timetest/'+songdata[0]+ '.txt', 'w') {|f| f.write(song.body('')) }
-  rescue Exception => e
-    File.open('data/2timetest/no/'+songdata[0]+ '.txt', 'w') {|f| f.write(e.message) }
-  end
-end
+require 'whatlanguage'
+file =  File.read('test.txt')
+w1 = WhatLanguage.new(:all)
+puts w1.language(file).to_s.class
 
-#puts song.body # prints lyrics separated by '\n'
+
+require 'whatlanguage'
+w1 = WhatLanguage.new(:all)
+Dir.foreach('data/lyricdata/') do |filename|
+	next if filename == '.' or filename == '..'
+	file =  File.read('data/lyricdata/' + filename) 
+	if w1.language(file).to_s != 'english'
+		File.delete('data/lyricdata/' + filename)
+	end
+
+end
