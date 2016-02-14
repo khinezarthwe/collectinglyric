@@ -1,1 +1,0 @@
-undefined method `body' for nil:NilClass

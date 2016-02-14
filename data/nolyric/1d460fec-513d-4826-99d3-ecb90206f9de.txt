@@ -1,1 +1,0 @@
-undefined method `children' for nil:NilClass
